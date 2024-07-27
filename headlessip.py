@@ -14,7 +14,6 @@ FTP_PASS = "ftp password"
 # Fetch file list into list (array)
 os.chdir("ips folder")
 filelist = glob.glob("*.txt")
-print(filelist)
 
 # connect to FTP Server
 ftp = ftplib.FTP(FTP_HOST, FTP_USER, FTP_PASS)
