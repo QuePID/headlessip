@@ -1,21 +1,25 @@
 import glob, os, ftplib
 # store ip to file ip.txt
-os.system('hostname -I > ip.txt')
 
-FTP_HOST = "put_ftp_server_ip_or_hostname_here"
-FTP_USER = "put_ftp_username_here";
-FTP_PASS = "put_ftp_password_here"
+# Fetch hostname and store to filename
+os.chdir("/bme280/ips/")
+hostname = "hostname -I > " + os.uname()[1] + "_ip.txt"
+os.system(hostname)
+
+# FTP connections settings
+FTP_HOST = "ftp hostname"
+FTP_USER = "ftp username";
+FTP_PASS = "ftp password"
 
 # Fetch file list into list (array)
-#os.chdir("/root)
-filelist = glob.glob("ip.txt")
+os.chdir("ips folder")
+filelist = glob.glob("*.txt")
 print(filelist)
 
 # connect to FTP Server
 ftp = ftplib.FTP(FTP_HOST, FTP_USER, FTP_PASS)
 ftp.encoding = "utf-8"
-ftp.cwd('put_folder_on_server_to_hold_ip_files')
-ftp.dir()
+ftp.cwd('where to put ip files')
 # upload to FTP Server
 mycount = 0
 
@@ -26,3 +30,4 @@ for i in filelist:
   print(file.name, " uploaded")
   ftp.dir()
   mycount += 1
+ftp.close()
